@@ -21,7 +21,7 @@ module Sshez
       options.file_content = OpenStruct.new
 
       opt_parser = OptionParser.new do |opts|
-        opts.banner = "Usage:\n\tsshez add <alias> (role@host) [options]\n\tsshez remove <alias>\n\tsshez list"
+        opts.banner = "Usage:\n\tsshez add <alias> (role@host) [options]\n\tsshez run <alias>\n\tsshez remove <alias>\n\tsshez list"
 
         opts.separator ""
         opts.separator "Specific options:"
@@ -111,7 +111,8 @@ module Sshez
       ALL = {
         "add" => Command.new("add", (Proc.new { |args| (args.length == 2) && (args[1].include?("@")) }), "sshez add <alias> (role@host) [options]", (Proc.new {|alias_name, role_host| [alias_name] + role_host.split('@') })),
         "remove" => Command.new("remove", (Proc.new { |args| args.length == 1 }), "sshez remove <alias>"),
-        "list" => Command.new("list", (Proc.new { |args| args.empty? }), "sshez list")
+        "list" => Command.new("list", (Proc.new { |args| args.empty? }), "sshez list"),
+        "run" => Command.new("run", (Proc.new { |args| args.length ==1 }), "sshez run <alias>")
       }
       #
       # processes the value passed if a processor was defined
